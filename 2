@@ -1,0 +1,61 @@
+Car fordMustang = new Car("Ford Mustang", "V8", 250);
+Car bugatti = new Car("Bugatti Mistral", "W16", 420);
+Car uaz = new Car("UAZ", "WW32", 1000);
+
+Console.WriteLine(fordMustang);
+Console.WriteLine(bugatti);
+Console.WriteLine(uaz);
+
+CarsCatalog catalog = new CarsCatalog(fordMustang, bugatti, uaz);
+Console.WriteLine(catalog[0]);
+Console.WriteLine(catalog[1]);
+Console.WriteLine(catalog[2]);
+
+class Car : IEquatable<Car>
+{
+    public string Name { get; set; }
+    public string Engine { get; set; }
+    private int MaxSpeed { get; set; }
+    public Car(string name, string engine, int maxSpeed)
+    {
+        Name = name;
+        Engine = engine;
+        MaxSpeed = maxSpeed;
+    }
+    
+    public override string ToString()
+    {
+        return Name;
+    }
+    public bool Equals(Car other)
+    {
+        if (other == null) return false;
+        return this.Name == other.Name && this.Engine == other.Engine && this.MaxSpeed == other.MaxSpeed;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, Engine, MaxSpeed);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+        return Equals(obj as Car);
+    }
+}
+
+class CarsCatalog
+{
+    private Car[] cars;
+
+    public CarsCatalog(params Car[] cars)
+    {
+        this.cars = cars;
+    }
+
+    public string this[int index]
+    {
+        get { return $"Название машины {cars[index].Name}, тип двигателя: {cars[index].Engine}"; }
+    }
+}
