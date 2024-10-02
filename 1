@@ -1,0 +1,84 @@
+Vector vector1 = new Vector(2, 10, 12);
+Vector vector2 = new Vector(4, 6, 8);
+
+Vector sum = vector1 + vector2;
+Console.WriteLine($"Сумма векторов: {sum.x}, {sum.y}, {sum.z}");
+
+double multiplicationVec = vector1 * vector2;
+Console.WriteLine($"Умножение векторов: {multiplicationVec}");
+
+Vector multipVec2 = vector1 * 3;
+Console.WriteLine($"Умножение вектора на константу: {multipVec2.x}, {multipVec2.y}, {multipVec2.z}");
+
+Console.WriteLine($"Равенство 1 и 2 векторов: {vector1 == vector2}");
+Console.WriteLine($"Вектор 1 больше вектора 2: {vector1 > vector2}");
+Console.WriteLine($"Вектор 2 больше вектора 1: {vector1 < vector2}");
+Console.WriteLine($"Векторы не равны: {vector1 != vector2}");
+Console.WriteLine($"Вектор 1 больше или равен вектору 2: {vector1 >= vector2}");
+Console.WriteLine($"Вектор 2 больше или равен вектору 1: {vector1 <= vector2}");
+
+struct Vector
+{
+    public double x, y, z;
+    public Vector(double x, double y, double z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    
+    public double vecLength
+    {
+        get { return Math.Sqrt(x * x + y * y + z * z); }
+    }
+    
+    public static Vector operator +(Vector v1, Vector v2)
+    {
+        return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    }
+
+    public static double operator *(Vector v1, Vector v2)
+    {
+        return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    }
+
+    public static Vector operator *(Vector v, double k)
+    {
+        return new Vector(v.x * k, v.y * k, v.z * k);
+    }
+    
+    public static Vector operator *(double k, Vector v)
+    {
+        return new Vector(k * v.x, k * v.y, k* v.z);
+    }
+
+    public static bool operator >(Vector v1, Vector v2)
+    {
+        return v1.vecLength > v2.vecLength;
+    }
+    
+    public static bool operator <(Vector v1, Vector v2)
+    {
+        return v1.vecLength < v2.vecLength;
+    }
+    
+    public static bool operator >=(Vector v1, Vector v2)
+    {
+        return v1.vecLength >= v2.vecLength;
+    }
+    
+    public static bool operator <=(Vector v1, Vector v2)
+    {
+        return v1.vecLength <= v2.vecLength;
+    }
+    
+    public static bool operator ==(Vector v1, Vector v2)
+    {
+        return v1.vecLength == v2.vecLength;
+    }
+    
+    public static bool operator !=(Vector v1, Vector v2)
+    {
+        return v1.vecLength != v2.vecLength;
+    }
+}
