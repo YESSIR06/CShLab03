@@ -1,0 +1,54 @@
+CurrencyUSD usd = new CurrencyUSD(100);
+CurrencyRUB rub = usd;
+CurrencyEUR eur = rub;
+
+Console.WriteLine($"Долларов: {usd.value} \nРублей: {rub.value} \nЕвро: {eur.value}");
+
+class Currency
+{
+    public double value;
+    public Currency(double value)
+    {
+        this.value = value;
+    }
+}
+
+class CurrencyUSD : Currency
+{
+    public CurrencyUSD(double value) : base(value) {}
+
+    public static implicit operator CurrencyEUR(CurrencyUSD param)
+    {
+        return new CurrencyEUR(param.value * 93.2 / 104.17);
+    }
+    public static implicit operator CurrencyRUB(CurrencyUSD param)
+    {
+        return new CurrencyRUB(param.value * 93.2);
+    }
+}
+class CurrencyEUR : Currency
+{
+    public CurrencyEUR(double value) : base(value) {}
+    
+    public static implicit operator CurrencyUSD(CurrencyEUR param)
+    {
+        return new CurrencyUSD(param.value * 104.17 / 93.2);
+    }
+    public static implicit operator CurrencyRUB(CurrencyEUR param)
+    {
+        return new CurrencyRUB(param.value * 104.17);
+    }
+}
+class CurrencyRUB : Currency
+{
+    public CurrencyRUB(double value) : base(value){}
+
+    public static implicit operator CurrencyUSD(CurrencyRUB param)
+    {
+        return new CurrencyUSD(param.value / 93.2);
+    }
+    public static implicit operator CurrencyEUR(CurrencyRUB param)
+    {
+        return new CurrencyEUR(param.value / 104.17);
+    }
+}
